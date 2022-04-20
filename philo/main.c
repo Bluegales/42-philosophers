@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:04 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/20 07:16:19 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:48:02 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "ft_save_ato.h"
+
+void	print_usage(void)
+{
+	printf("Usage: philo number_of_philosophers time_to_die time_to_eat "
+		"time_to_sleep [number_of_times_each_philosopher_must_eat]\n");
+}
+
+int	parse(int argc, char **argv, t_philo_param *param)
+{
+	if (argc != 5 && argc != 6)
+		return (1);
+	param->number_to_eat = -1;
+	if (argc == 6)
+	{
+		if (save_atoi(argv[5], &param->number_to_eat) == -1)
+			return (1);
+	}
+	if (save_atoi(argv[1], &param->count) == -1)
+		return (1);
+	if (save_atoll(argv[2], &param->time_to_die) == -1)
+		return (1);
+	if (save_atoll(argv[3], &param->time_to_eat) == -1)
+		return (1);
+	if (save_atoll(argv[4], &param->time_to_sleep) == -1)
+		return (1);
+	return (0);
+}
+
 int	main(int argc, char **argv)
 {
 	t_philo_param	params;
 	t_philo_factory	factory;
 	pthread_t		doctor;
 
-	params.count = atoi(argv[1]);
-	params.number_to_eat = 99999999;
-	if (argc == 6)
-		params.number_to_eat = atoi(argv[5]);
-	params.time_to_die = atoi(argv[2]);
-	params.time_to_eat = atoi(argv[3]);
-	params.time_to_sleep = atoi(argv[4]);
-	printf("count: %d, die: %lld, eat %lld, sleep %lld, number_eat %d\n", params.count, params.time_to_die, params.time_to_eat, params.time_to_sleep, params.number_to_eat);
+	if (parse(argc, argv, &params))
+	{
+		print_usage();
+		return (0);
+	}
 	params.start_time = get_time();
 	philo_factory_init(&factory, &params);
 	philo_factory_start(&factory);
 	pthread_create(&doctor, NULL, doctor_thread, (void *)factory.philos);
 	philo_factory_join(&factory);
 	pthread_join(doctor, NULL);
-	return 0;
+	philo_factory_cleanup(&factory);
+	return (0);
 }

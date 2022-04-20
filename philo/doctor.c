@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:59:20 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/20 07:35:29 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:43:14 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,50 +19,40 @@
 #include "philo.h"
 #include "time.h"
 
-static void	kill_all(t_philo *philos)
+static void	kill_all_philos(t_philo *philos)
 {
 	int	i;
 
 	i = 0;
-	//printf("killing all\n");
 	while (i < philos->param->count)
 	{
 		{
-			pthread_mutex_lock(&philos[i].time_dead_mutex);
-			philos[i].time_dead = -1;
-			pthread_mutex_unlock(&philos[i].time_dead_mutex);
+			pthread_mutex_lock(&philos[i].finished_mutex);
+			philos[i].finished = 1;
+			pthread_mutex_unlock(&philos[i].finished_mutex);
 		}
 		i++;
 	}
 }
 
-static int	philos_alive(t_philo *philos)
+static int	philo_dead(t_philo *philos)
 {
 	int	i;
-	int	alive;
+	int	dead;
 
 	i = 0;
-	alive = 0;
+	dead = 0;
 	while (i < philos->param->count)
 	{
 		{
-			pthread_mutex_lock(&philos[i].time_dead_mutex);
-			if (philos[i].time_dead != -1)
-			{
-				if (philos[i].time_dead < get_time())
-				{
-					//printf("%lld time dead %lld now\n", philos[i].time_dead, get_time());
-					philos[i].time_dead = -1;
-					philo_feedback_force(&philos[i], e_philo_dead);
-				}
-				else
-					alive++;
-			}
-			pthread_mutex_unlock(&philos[i].time_dead_mutex);
+			pthread_mutex_lock(&philos[i].finished_mutex);
+			if (philos[i].finished)
+				dead++;
+			pthread_mutex_unlock(&philos[i].finished_mutex);
 		}
 		i++;
 	}
-	return (alive);
+	return (dead);
 }
 
 static int	need_eat(t_philo *philos)
@@ -76,10 +66,10 @@ static int	need_eat(t_philo *philos)
 	{
 		{
 			pthread_mutex_lock(&philos[i].number_eaten_mutex);
-			if (philos[i].number_eaten < philos->param->number_to_eat)
+			if (philos[i].number_eaten < philos->param->number_to_eat
+				&& !philos[i].finished)
 				need_eat++;
 			pthread_mutex_unlock(&philos[i].number_eaten_mutex);
-			//printf("eaten %d\n", philos[i].number_eaten);
 		}
 		i++;
 	}
@@ -91,18 +81,17 @@ void	*doctor_thread(void *philos_v)
 	t_philo	*philos;
 
 	philos = (t_philo *)philos_v;
-
 	while (1)
 	{
 		usleep(5 * 1000);
-		//printf("checkup\n");
-		if (philos_alive(philos) == 0)
+		if (philo_dead(philos))
 		{
+			kill_all_philos(philos);
 			return (0);
 		}
-		if (need_eat(philos) == 0)
+		if (philos->param->number_to_eat != -1 && need_eat(philos) == 0)
 		{
-			kill_all(philos);
+			kill_all_philos(philos);
 			return (0);
 		}
 	}

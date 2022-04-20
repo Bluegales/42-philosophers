@@ -3,6 +3,8 @@
 		"pthread.h": "c",
 		"time.h": "c",
 		"stddef.h": "c",
-		"fcntl.h": "c"
+		"fcntl.h": "c",
+		"ft_save_ato.h": "c",
+		"climits": "c"
 	}
 }

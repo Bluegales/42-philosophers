@@ -16,12 +16,11 @@
 #include "philo.h"
 
 #include <pthread.h>
+#include <semaphore.h>
 
 typedef struct s_philo_factory
 {
-	t_philo			*philos;
-	pthread_t		*threads;
-	int				*returns;
+	t_philo			philo;
 	int				count;
 }	t_philo_factory;
 

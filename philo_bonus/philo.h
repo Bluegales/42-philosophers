@@ -30,7 +30,7 @@ typedef struct s_philo_param
 
 typedef struct s_philo
 {
-	const t_philo_param		*param;
+	const t_philo_param		param;
 	int		id;
 	int		number_eaten;
 	ms		time_dead;
