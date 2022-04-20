@@ -6,21 +6,19 @@
 #    By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 12:13:51 by pfuchs            #+#    #+#              #
-#    Updated: 2022/04/20 23:53:24 by pfuchs           ###   ########.fr        #
+#    Updated: 2022/04/21 00:56:46 by pfuchs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-VPATH = src
-
 # Compiler Variables
 CC		= gcc
-CFLAGSS	= -Wall -Wextra -Werror -g
-INCFLAG	= -Imlx -I include -I libft
+CFLAGSS	= -Wall -Wextra -Werror
+INCFLAG	=
 # File Variables
 NAME	= philo
-SRC_NAMES	= main doctor philo philo_util philo_factory time \
+SRC_N	= main doctor philo philo_util philo_factory time \
 			ft_save_atoi ft_save_atol ft_save_atoll
-SRC		= $(addsuffix .c,$(SRC_NAMES))
+SRC		= $(addsuffix .c,$(SRC_N))
 OBJ		= $(addprefix _bin/,$(notdir $(SRC:.c=.o)))
 
 $(NAME): $(OBJ)
@@ -38,15 +36,12 @@ _bin/%.o : %.c | _bin
 clean:
 	@rm -f $(OBJ)
 
-fclean:	clean
-	@rm -f $(NAME)
+fclean:
+	@rm -fr _bin
 
 re:		fclean all
 
 all:	$(NAME)
-
-norm:
-	norminette $(SRC)
 
 .PHONY: clean fclean re all
 

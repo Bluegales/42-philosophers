@@ -5,6 +5,7 @@
 		"stddef.h": "c",
 		"fcntl.h": "c",
 		"ft_save_ato.h": "c",
-		"climits": "c"
+		"climits": "c",
+		"doctor.h": "c"
 	}
 }

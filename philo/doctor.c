@@ -6,15 +6,14 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 23:59:20 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:43:14 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:50:19 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doctor.h"
 
-#include <pthread.h>
-#include <unistd.h>
-#include <stdio.h>
+#include <pthread.h> // mutex
+#include <unistd.h> // usleep
 
 #include "philo.h"
 #include "time.h"

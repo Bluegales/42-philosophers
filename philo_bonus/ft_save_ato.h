@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.h                                             :+:      :+:    :+:   */
+/*   ft_save_ato.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/20 00:06:56 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:27:40 by pfuchs           ###   ########.fr       */
+/*   Created: 2022/04/20 23:06:14 by pfuchs            #+#    #+#             */
+/*   Updated: 2022/04/21 00:05:19 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TIME_H
-# define TIME_H
+#ifndef FT_SAVE_ATO_H
+# define FT_SAVE_ATO_H
 
-typedef long long	t_ms;
+int	save_atoi(const char *str, int *val);
+int	save_atol(const char *str, long *val);
+int	save_atoll(const char *str, long long *val);
 
-t_ms	get_time(void);
-void	wait_until(t_ms wakeup_time);
-
-#endif // TIME_H
+#endif // FT_SAVE_ATO_H

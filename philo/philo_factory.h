@@ -6,16 +6,18 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:37 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:26:40 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:53:05 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_FACTORY_H
 # define PHILO_FACTORY_H
 
-# include <pthread.h>
+# include <pthread.h> // cant typedef pthread because norm
 
 # include "philo.h"
+
+typedef struct s_philo_factory	t_philo_factory;
 
 typedef struct s_philo_factory
 {

@@ -6,14 +6,14 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:29 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:25:08 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:51:48 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_factory.h"
 
-#include <pthread.h>
-#include <stdlib.h>
+#include <pthread.h> //mutex thread
+#include <stdlib.h> //malloc
 
 #include "philo.h"
 

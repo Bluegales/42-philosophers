@@ -6,35 +6,38 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:56:54 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/20 08:56:51 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:22:41 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHER_H
-# define PHILOSOPHER_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include "pthread.h"
-
-#include <semaphore.h>
 # include "time.h"
 
 typedef struct s_philo_param
 {
-	int	count;
-	int	number_to_eat;
-	ms	start_time;
-	ms	time_to_die;
-	ms	time_to_eat;
-	ms	time_to_sleep;
+	int		count;
+	int		number_to_eat;
+	t_ms	start_time;
+	t_ms	time_to_die;
+	t_ms	time_to_eat;
+	t_ms	time_to_sleep;
 }	t_philo_param;
 
 typedef struct s_philo
 {
-	const t_philo_param		param;
-	int		id;
-	int		number_eaten;
-	ms		time_dead;
-	sem_t	sticks;
+	const t_philo_param		*param;
+	int						id;
+	t_ms					die_time;
+	t_ms					eating_time;
+	pthread_mutex_t			left_stick;
+	pthread_mutex_t			*right_stick;
+	int						number_eaten;
+	pthread_mutex_t			number_eaten_mutex;
+	int						finished;
+	pthread_mutex_t			finished_mutex;
 }	t_philo;
 
 enum	e_philo_action {
@@ -46,7 +49,8 @@ enum	e_philo_action {
 };
 
 void	philo_feedback(t_philo *philo, enum e_philo_action action);
-void	philo_feedback_force(t_philo *philo, enum e_philo_action action);
+int		is_finished(t_philo *philo);
+t_ms	next_eat_time(const t_philo *philo);
 void	*philo_thread(void *philo);
 
-#endif // PHILOSOPHER_H
+#endif // PHILO_H

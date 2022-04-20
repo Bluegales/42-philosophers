@@ -6,7 +6,7 @@
 #    By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 12:13:51 by pfuchs            #+#    #+#              #
-#    Updated: 2022/04/20 05:42:22 by pfuchs           ###   ########.fr        #
+#    Updated: 2022/04/20 23:53:24 by pfuchs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ CFLAGSS	= -Wall -Wextra -Werror -g
 INCFLAG	= -Imlx -I include -I libft
 # File Variables
 NAME	= philo
-SRC		= main.c doctor.c philo.c philo_factory.c time.c
+SRC_NAMES	= main doctor philo philo_util philo_factory time \
+			ft_save_atoi ft_save_atol ft_save_atoll
+SRC		= $(addsuffix .c,$(SRC_NAMES))
 OBJ		= $(addprefix _bin/,$(notdir $(SRC:.c=.o)))
 
 $(NAME): $(OBJ)

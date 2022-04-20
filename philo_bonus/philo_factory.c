@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:29 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/20 09:04:57 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:25:08 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,20 @@
 #include <pthread.h>
 #include <stdlib.h>
 
-#include <fcntl.h>
-#include <sys/stat.h>
-#include <semaphore.h>
-
 #include "philo.h"
 
 void	philo_factory_cleanup(t_philo_factory *factory)
 {
+	int	i;
+
+	i = 0;
+	while (i < factory->count)
+	{
+		pthread_mutex_destroy(&factory->philos[i].finished_mutex);
+		pthread_mutex_destroy(&factory->philos[i].number_eaten_mutex);
+		pthread_mutex_destroy(&factory->philos[i].left_stick);
+		i++;
+	}
 	free(factory->philos);
 	free(factory->threads);
 	free(factory->returns);
@@ -30,15 +36,13 @@ void	philo_factory_cleanup(t_philo_factory *factory)
 
 static void	set_start_data(t_philo *philo, const t_philo_param *param, int id)
 {
-	sem_open("asd", O_CREAT, 0, 0);
-
 	philo->id = id;
+	philo->finished = 0;
 	philo->number_eaten = 0;
 	philo->param = param;
-	philo->time_dead = 0;
-	pthread_mutex_init(&philo->time_dead_mutex, NULL);
-	pthread_mutex_init(&philo->left_stick, NULL);
+	pthread_mutex_init(&philo->finished_mutex, NULL);
 	pthread_mutex_init(&philo->number_eaten_mutex, NULL);
+	pthread_mutex_init(&philo->left_stick, NULL);
 	if (id + 1 != param->count)
 		philo->right_stick = &(philo + 1)->left_stick;
 	else
@@ -77,7 +81,7 @@ int	philo_factory_start(t_philo_factory *factory)
 	while (i < factory->count)
 	{
 		error += pthread_create(&factory->threads[i], NULL, philo_thread,
-			(void *)&factory->philos[i]);
+				(void *)&factory->philos[i]);
 		i++;
 	}
 	return (0);

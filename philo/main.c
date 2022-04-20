@@ -6,19 +6,17 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:04 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:48:02 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:51:21 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> //printf
+
+#include "ft_save_ato.h"
 #include "philo_factory.h"
 #include "philo.h"
 #include "time.h"
 #include "doctor.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "ft_save_ato.h"
 
 void	print_usage(void)
 {

@@ -6,13 +6,13 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 23:47:53 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:53:28 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:32:53 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-#include <stdio.h> // printf
+#include <stdio.h>
 
 void	philo_feedback(t_philo *philo, enum e_philo_action action)
 {

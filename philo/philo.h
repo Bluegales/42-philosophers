@@ -6,15 +6,15 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:56:54 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:22:41 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:54:18 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "pthread.h"
-# include "time.h"
+# include "pthread.h" // cant typedef pthread because norm
+# include "time.h" // t_ms
 
 typedef struct s_philo_param
 {

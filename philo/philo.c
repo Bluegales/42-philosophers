@@ -6,13 +6,11 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:56:58 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:42:18 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:53:53 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-//#include <unistd.h>
 
 #include "time.h"
 
