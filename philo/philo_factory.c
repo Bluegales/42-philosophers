@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:29 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/20 01:39:54 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/20 07:11:05 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	set_start_data(t_philo *philo, const t_philo_param *param, int id)
 	philo->time_dead = 0;
 	pthread_mutex_init(&philo->time_dead_mutex, NULL);
 	pthread_mutex_init(&philo->left_stick, NULL);
+	pthread_mutex_init(&philo->number_eaten_mutex, NULL);
 	if (id + 1 != param->count)
 		philo->right_stick = &(philo + 1)->left_stick;
 	else
@@ -70,7 +71,7 @@ int	philo_factory_start(t_philo_factory *factory)
 	error = 0;
 	while (i < factory->count)
 	{
-		error += pthread_create(factory->threads + i, NULL, philo_thread,
+		error += pthread_create(&factory->threads[i], NULL, philo_thread,
 			(void *)&factory->philos[i]);
 		i++;
 	}

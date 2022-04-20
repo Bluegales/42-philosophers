@@ -6,7 +6,7 @@
 #    By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 12:13:51 by pfuchs            #+#    #+#              #
-#    Updated: 2022/04/20 01:00:02 by pfuchs           ###   ########.fr        #
+#    Updated: 2022/04/20 05:42:22 by pfuchs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC		= gcc
 CFLAGSS	= -Wall -Wextra -Werror -g
 INCFLAG	= -Imlx -I include -I libft
 # File Variables
-NAME	= philosophers
+NAME	= philo
 SRC		= main.c doctor.c philo.c philo_factory.c time.c
 OBJ		= $(addprefix _bin/,$(notdir $(SRC:.c=.o)))
 
