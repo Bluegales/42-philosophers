@@ -6,17 +6,19 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 23:47:53 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:32:53 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 04:41:22 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-#include <stdio.h>
+#include <semaphore.h>
+
+#include <stdio.h> // printf
 
 void	philo_feedback(t_philo *philo, enum e_philo_action action)
 {
-	int			cancel;
+	int			error;
 	const char	*msg[] = {
 		"has taken a fork",
 		"is eating",
@@ -25,34 +27,16 @@ void	philo_feedback(t_philo *philo, enum e_philo_action action)
 		"died"
 	};
 
-	cancel = 0;
-	{
-		pthread_mutex_lock(&philo->finished_mutex);
-		if (philo->finished)
-			cancel = 1;
-		pthread_mutex_unlock(&philo->finished_mutex);
-	}
-	if (cancel)
-		return ;
+	error = sem_wait(philo->finished);
+	if (error)
+		return;
+	printf("got error: %d\n", error);
+	sem_post(philo->finished);
 	if (action == e_philo_dead || philo->die_time > get_time())
 	{
 		printf("%lld %d %s\n", get_time() - philo->param->start_time,
 			philo->id, msg[(int)action]);
 	}
-}
-
-int	is_finished(t_philo *philo)
-{
-	int	finished;
-
-	finished = 0;
-	{
-		pthread_mutex_lock(&philo->finished_mutex);
-		if (philo->finished)
-			finished = 1;
-		pthread_mutex_unlock(&philo->finished_mutex);
-	}
-	return (finished);
 }
 
 t_ms	next_eat_time(const t_philo *philo)

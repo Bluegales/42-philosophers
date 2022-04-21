@@ -6,19 +6,16 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:04 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:48:02 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 04:09:43 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> //printf
+
+#include "ft_save_ato.h"
 #include "philo_factory.h"
 #include "philo.h"
 #include "time.h"
-#include "doctor.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-
-#include "ft_save_ato.h"
 
 void	print_usage(void)
 {
@@ -50,8 +47,6 @@ int	parse(int argc, char **argv, t_philo_param *param)
 int	main(int argc, char **argv)
 {
 	t_philo_param	params;
-	t_philo_factory	factory;
-	pthread_t		doctor;
 
 	if (parse(argc, argv, &params))
 	{
@@ -59,11 +54,7 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	params.start_time = get_time();
-	philo_factory_init(&factory, &params);
-	philo_factory_start(&factory);
-	pthread_create(&doctor, NULL, doctor_thread, (void *)factory.philos);
-	philo_factory_join(&factory);
-	pthread_join(doctor, NULL);
-	philo_factory_cleanup(&factory);
+	philo_factory_start(&params);
+	wait_until(get_time() + 1000);
 	return (0);
 }

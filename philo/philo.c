@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:56:58 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:53:53 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 04:04:45 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static void	eat(t_philo *philo)
 	{
 		philo->die_time = time + philo->param->time_to_die;
 		philo_feedback(philo, e_philo_eat);
+		wait_until(time + philo->param->time_to_eat);
 		{
 			if (philo->param->number_to_eat != -1)
 			{
@@ -31,7 +32,6 @@ static void	eat(t_philo *philo)
 				pthread_mutex_unlock(&philo->number_eaten_mutex);
 			}
 		}
-		wait_until(time + philo->param->time_to_eat);
 	}
 }
 

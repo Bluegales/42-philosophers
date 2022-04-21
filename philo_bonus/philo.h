@@ -6,15 +6,16 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:56:54 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:22:41 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 04:01:17 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "pthread.h"
-# include "time.h"
+# include <semaphore.h>
+
+# include "time.h" // t_ms
 
 typedef struct s_philo_param
 {
@@ -32,12 +33,10 @@ typedef struct s_philo
 	int						id;
 	t_ms					die_time;
 	t_ms					eating_time;
-	pthread_mutex_t			left_stick;
-	pthread_mutex_t			*right_stick;
+	sem_t					*sticks;
+	sem_t					*finished;
+	sem_t					*eaten_enough;
 	int						number_eaten;
-	pthread_mutex_t			number_eaten_mutex;
-	int						finished;
-	pthread_mutex_t			finished_mutex;
 }	t_philo;
 
 enum	e_philo_action {

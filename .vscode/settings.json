@@ -6,6 +6,7 @@
 		"fcntl.h": "c",
 		"ft_save_ato.h": "c",
 		"climits": "c",
-		"doctor.h": "c"
+		"doctor.h": "c",
+		"stat.h": "c"
 	}
 }

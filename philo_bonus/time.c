@@ -6,15 +6,15 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:06:35 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:27:27 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/21 00:54:57 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "time.h"
 
-#include <sys/time.h>
-#include <unistd.h>
-#include <stddef.h>
+#include <sys/time.h> // gettimeofday
+#include <unistd.h> // usleep
+#include <stddef.h> // NULL
 
 t_ms	get_time(void)
 {
