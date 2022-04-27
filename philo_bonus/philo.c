@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:56:58 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/27 03:38:34 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/27 03:46:42 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 #include <sys/stat.h> // For mode constants
 
 #include "time.h"
-
-
 
 static void	finish(void)
 {
