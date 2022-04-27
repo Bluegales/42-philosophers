@@ -6,7 +6,7 @@
 #    By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/10 12:13:51 by pfuchs            #+#    #+#              #
-#    Updated: 2022/04/21 03:34:00 by pfuchs           ###   ########.fr        #
+#    Updated: 2022/04/27 03:40:48 by pfuchs           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,10 @@ _bin/%.o : %.c | _bin
 	$(CC) -c $(CFLAGSS) -MMD -MP $(INCFLAG) $< -o $@
 
 clean:
-	@rm -f $(OBJ)
-
-fclean:
 	@rm -fr _bin
+
+fclean:	clean
+	@rm -f $(NAME)
 
 re:		fclean all
 

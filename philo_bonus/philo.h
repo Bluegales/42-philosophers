@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:56:54 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 04:01:17 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/27 03:33:08 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ typedef struct s_philo
 	t_ms					die_time;
 	t_ms					eating_time;
 	sem_t					*sticks;
-	sem_t					*finished;
 	sem_t					*eaten_enough;
+	sem_t					*print;
 	int						number_eaten;
 }	t_philo;
 
@@ -48,8 +48,8 @@ enum	e_philo_action {
 };
 
 void	philo_feedback(t_philo *philo, enum e_philo_action action);
-int		is_finished(t_philo *philo);
 t_ms	next_eat_time(const t_philo *philo);
 void	*philo_thread(void *philo);
+int		is_finished(void);
 
 #endif // PHILO_H

@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:04 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:51:21 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/27 03:11:44 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ int	main(int argc, char **argv)
 		return (0);
 	}
 	params.start_time = get_time();
+	if (params.count == 1)
+	{
+		wait_until(params.start_time + params.time_to_die);
+		printf("%lld %d %s\n", get_time() - params.start_time,
+			0, "died");
+		return (0);
+	}
 	philo_factory_init(&factory, &params);
 	philo_factory_start(&factory);
 	pthread_create(&doctor, NULL, doctor_thread, (void *)factory.philos);

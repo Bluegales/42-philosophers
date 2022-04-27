@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:06:35 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:54:57 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/27 03:22:39 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_ms	get_time(void)
 
 void	wait_until(t_ms wakeup_time)
 {
-	const int	margin = 2;
+	const int	margin = 5;
 	t_ms		time;
 
 	time = get_time();

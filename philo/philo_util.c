@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 23:47:53 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 00:53:28 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/27 03:20:45 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	philo_feedback(t_philo *philo, enum e_philo_action action)
 	if (action == e_philo_dead || philo->die_time > get_time())
 	{
 		printf("%lld %d %s\n", get_time() - philo->param->start_time,
-			philo->id, msg[(int)action]);
+			philo->id + 1, msg[(int)action]);
 	}
 }
 

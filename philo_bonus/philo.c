@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 21:56:58 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 04:44:10 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/27 03:38:34 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,12 @@
 #include "time.h"
 
 
-#include <stdio.h>
 
-int	is_finished(t_philo *philo)
+static void	finish(void)
 {
-	int	error;
+	sem_t	*finished;
 
-	error = sem_wait(philo->finished);
-	if (error)
-		return (1);
-	sem_post(philo->finished);
-	return (0);
+	finished = sem_open("/finished", O_CREAT, 0644, 9999);
 }
 
 static void	eat(t_philo *philo)
@@ -46,7 +41,7 @@ static void	eat(t_philo *philo)
 			{
 				philo->number_eaten++;
 				if (philo->number_eaten == philo->param->number_to_eat)
-					sem_post(philo->eaten_enough);
+					finish();
 			}
 		}
 		wait_until(time + philo->param->time_to_eat);
@@ -78,16 +73,14 @@ static void	take_sticks(t_philo *philo)
 
 static int	work(t_philo *philo)
 {
-	if (is_finished(philo))
+	if (is_finished())
 	{
-		return(0);
+		return (0);
 	}
 	if (philo->die_time < philo->eating_time || philo->die_time <= get_time())
 	{
 		wait_until(philo->die_time);
 		philo_feedback(philo, e_philo_dead);
-		sem_close(philo->finished);
-		printf("killed it\n");
 		return (0);
 	}
 	wait_until(philo->eating_time);
@@ -101,13 +94,10 @@ void	*philo_thread(void *philo_v)
 	t_philo	*philo;
 
 	philo = (t_philo *)philo_v;
-	philo->sticks = sem_open("sticks_sem", 0);
-	philo->eaten_enough = sem_open("eaten_sem", 0);
-	philo->finished = sem_open("finished_sem", 0);
-	printf("%p\n%p\n%p\n", philo->sticks, philo->eaten_enough, philo->finished);
 	philo->die_time = philo->param->start_time + philo->param->time_to_die;
 	philo->eating_time = next_eat_time(philo);
 	while (work(philo))
 		;
+	finish();
 	return (0);
 }

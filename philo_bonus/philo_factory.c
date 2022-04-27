@@ -6,7 +6,7 @@
 /*   By: pfuchs <pfuchs@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/20 00:26:29 by pfuchs            #+#    #+#             */
-/*   Updated: 2022/04/21 04:28:41 by pfuchs           ###   ########.fr       */
+/*   Updated: 2022/04/27 03:44:34 by pfuchs           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 #include <fcntl.h>	// For O_* constants
 #include <sys/stat.h> // For mode constants
 
+#include <sys/types.h>
+#include <sys/wait.h>
+
 #include "philo.h"
 
 static void	set_start_data(t_philo *philo, const t_philo_param *param, int id)
@@ -26,7 +29,31 @@ static void	set_start_data(t_philo *philo, const t_philo_param *param, int id)
 	philo->param = param;
 }
 
-#include <stdio.h>
+static void	init_sem(t_philo_param *param, t_philo *philo)
+{
+	sem_unlink("/sticks");
+	sem_unlink("/eaten");
+	sem_unlink("/finished");
+	sem_unlink("/print");
+	philo->sticks = sem_open("/sticks", O_CREAT, 0644, param->count);
+	philo->print = sem_open("/print", O_CREAT, 0644, 1);
+	philo->eaten_enough = sem_open("/eaten", O_CREAT, 0644, 0);
+	sem_unlink("/sticks");
+	sem_unlink("/eaten");
+	sem_unlink("/print");
+}
+
+static void	wait_for_children(t_philo_param *param)
+{
+	int	i;
+
+	i = 0;
+	while (i < param->count)
+	{
+		waitpid(-1, NULL, 0);
+		i++;
+	}
+}
 
 int	philo_factory_start(t_philo_param *param)
 {
@@ -35,10 +62,7 @@ int	philo_factory_start(t_philo_param *param)
 	int			i;
 
 	i = 0;
-	philo.sticks = sem_open("sticks_sem", O_CREAT, 0644, param->count);
-	philo.eaten_enough = sem_open("eaten_sem", O_CREAT, 0644, param->count);
-	philo.finished = sem_open("finished_sem", O_CREAT, 0644, param->count);
-	printf("%p\n%p\n%p\n", philo.sticks, philo.eaten_enough, philo.finished);
+	init_sem(param, &philo);
 	while (i < param->count)
 	{
 		id = fork();
@@ -51,5 +75,10 @@ int	philo_factory_start(t_philo_param *param)
 		if (id != -1)
 			i++;
 	}
+	if (id != 0)
+	{
+		wait_for_children(param);
+	}
+	sem_unlink("/finished");
 	return (0);
 }
