@@ -16,28 +16,23 @@
 
 void	philo_feedback(t_philo *philo, enum e_philo_action action)
 {
-	int			cancel;
-	const char	*msg[] = {
+	const char				*msg[] = {
 		"has taken a fork",
 		"is eating",
 		"is sleeping",
 		"is thinking",
 		"died"
 	};
+	static pthread_mutex_t	print = PTHREAD_MUTEX_INITIALIZER;
 
-	cancel = 0;
-	{
-		pthread_mutex_lock(&philo->finished_mutex);
-		if (philo->finished)
-			cancel = 1;
-		pthread_mutex_unlock(&philo->finished_mutex);
-	}
-	if (cancel)
+	if (is_finished(philo))
 		return ;
 	if (action == e_philo_dead || philo->die_time > get_time())
 	{
+		pthread_mutex_lock(&print);
 		printf("%lld %d %s\n", get_time() - philo->param->start_time,
 			philo->id + 1, msg[(int)action]);
+		pthread_mutex_unlock(&print);
 	}
 }
 

@@ -12,7 +12,7 @@
 
 # Compiler Variables
 CC		= gcc
-CFLAGSS	= -Wall -Wextra -Werror
+CFLAGSS	= -Wall -Wextra -Werror -g
 INCFLAG	=
 # File Variables
 NAME	= philo_bonus

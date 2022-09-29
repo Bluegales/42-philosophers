@@ -13,6 +13,7 @@
 #ifndef PHILO_FACTORY_H
 # define PHILO_FACTORY_H
 
+# include <stddef.h>
 # include <pthread.h> // cant typedef pthread because norm
 
 # include "philo.h"

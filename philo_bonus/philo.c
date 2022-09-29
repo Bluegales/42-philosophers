@@ -12,17 +12,22 @@
 
 #include "philo.h"
 
+#include <stdlib.h>
+#include <stdio.h>
 #include <semaphore.h>
 #include <fcntl.h>	// For O_* constants
 #include <sys/stat.h> // For mode constants
 
 #include "time.h"
 
-static void	finish(void)
+static void	finish(t_philo *philo)
 {
 	sem_t	*finished;
 
 	finished = sem_open("/finished", O_CREAT, 0644, 9999);
+	sem_post(philo->sticks);
+	sem_post(philo->sticks);
+	(void) finished;
 }
 
 static void	eat(t_philo *philo)
@@ -39,7 +44,7 @@ static void	eat(t_philo *philo)
 			{
 				philo->number_eaten++;
 				if (philo->number_eaten == philo->param->number_to_eat)
-					finish();
+					finish(philo);
 			}
 		}
 		wait_until(time + philo->param->time_to_eat);
@@ -96,6 +101,6 @@ void	*philo_thread(void *philo_v)
 	philo->eating_time = next_eat_time(philo);
 	while (work(philo))
 		;
-	finish();
+	finish(philo);
 	return (0);
 }

@@ -38,15 +38,15 @@ static void	eat(t_philo *philo)
 static void	take_sticks(t_philo *philo)
 {
 	{
-		pthread_mutex_lock(&philo->left_stick);
+		pthread_mutex_lock(philo->first_stick);
 		philo_feedback(philo, e_philo_stick);
 		{
-			pthread_mutex_lock(philo->right_stick);
+			pthread_mutex_lock(philo->second_stick);
 			philo_feedback(philo, e_philo_stick);
 			eat(philo);
-			pthread_mutex_unlock(philo->right_stick);
+			pthread_mutex_unlock(philo->second_stick);
 		}
-		pthread_mutex_unlock(&philo->left_stick);
+		pthread_mutex_unlock(philo->first_stick);
 	}
 	philo_feedback(philo, e_philo_sleep);
 	if (philo->die_time < get_time() + philo->param->time_to_sleep)

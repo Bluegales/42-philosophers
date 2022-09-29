@@ -12,6 +12,7 @@
 
 #include "doctor.h"
 
+#include <stddef.h>
 #include <pthread.h> // mutex
 #include <unistd.h> // usleep
 
@@ -82,7 +83,7 @@ void	*doctor_thread(void *philos_v)
 	philos = (t_philo *)philos_v;
 	while (1)
 	{
-		usleep(5 * 1000);
+		usleep(1 * 1000);
 		if (philo_dead(philos))
 		{
 			kill_all_philos(philos);

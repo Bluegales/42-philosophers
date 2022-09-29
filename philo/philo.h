@@ -13,7 +13,8 @@
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "pthread.h" // cant typedef pthread because norm
+# include <stddef.h>
+# include <pthread.h> // cant typedef pthread because norm
 # include "time.h" // t_ms
 
 typedef struct s_philo_param
@@ -34,6 +35,8 @@ typedef struct s_philo
 	t_ms					eating_time;
 	pthread_mutex_t			left_stick;
 	pthread_mutex_t			*right_stick;
+	pthread_mutex_t			*first_stick;
+	pthread_mutex_t			*second_stick;
 	int						number_eaten;
 	pthread_mutex_t			number_eaten_mutex;
 	int						finished;

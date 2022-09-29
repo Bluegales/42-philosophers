@@ -47,6 +47,13 @@ static void	set_start_data(t_philo *philo, const t_philo_param *param, int id)
 		philo->right_stick = &(philo + 1)->left_stick;
 	else
 		philo->right_stick = &(philo - id)->left_stick;
+	philo->first_stick = &philo->left_stick;
+	philo->second_stick = philo->right_stick;
+	if (id % 2)
+	{
+		philo->first_stick = philo->right_stick;
+		philo->second_stick = &philo->left_stick;
+	}
 }
 
 int	philo_factory_init(t_philo_factory *factory, const t_philo_param *param)
