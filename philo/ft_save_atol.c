@@ -14,8 +14,10 @@
 
 #include <limits.h>
 
-static int	convert_sign(int sign, long *val)
+static int	convert_sign(int sign, long *val, char c)
 {
+	if (c != 0)
+		return (2);
 	if (*val == LONG_MIN && !sign)
 	{
 		*val = LONG_MAX;
@@ -59,7 +61,7 @@ int	save_atol(const char *str, long *val)
 		*val -= *str - '0';
 		str++;
 	}
-	if (convert_sign(sign, val))
+	if (convert_sign(sign, val, *str))
 		return (2);
 	if (*str == '\0')
 		return (0);

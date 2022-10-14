@@ -43,7 +43,7 @@ static void	eat(t_philo *philo)
 			if (philo->param->number_to_eat != -1)
 			{
 				philo->number_eaten++;
-				if (philo->number_eaten == philo->param->number_to_eat)
+				if (philo->number_eaten == philo->param->number_to_eat + 1)
 					finish(philo);
 			}
 		}

@@ -30,16 +30,16 @@ int	parse(int argc, char **argv, t_philo_param *param)
 	param->number_to_eat = -1;
 	if (argc == 6)
 	{
-		if (save_atoi(argv[5], &param->number_to_eat) == -1)
+		if (save_atoi(argv[5], &param->number_to_eat))
 			return (1);
 	}
-	if (save_atoi(argv[1], &param->count) == -1)
+	if (save_atoi(argv[1], &param->count))
 		return (1);
-	if (save_atoll(argv[2], &param->time_to_die) == -1)
+	if (save_atoll(argv[2], &param->time_to_die))
 		return (1);
-	if (save_atoll(argv[3], &param->time_to_eat) == -1)
+	if (save_atoll(argv[3], &param->time_to_eat))
 		return (1);
-	if (save_atoll(argv[4], &param->time_to_sleep) == -1)
+	if (save_atoll(argv[4], &param->time_to_sleep))
 		return (1);
 	return (0);
 }

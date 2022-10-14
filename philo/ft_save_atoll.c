@@ -13,9 +13,14 @@
 #include "ft_save_ato.h"
 
 #include <limits.h>
+#include <stdio.h>
 
-static int	convert_sign(int sign, long long *val)
+static int	convert_sign(int sign, long long *val, char c)
 {
+	if (c != 0)
+	{
+		return (2);
+	}
 	if (*val == LLONG_MIN && !sign)
 	{
 		*val = LLONG_MAX;
@@ -59,7 +64,7 @@ int	save_atoll(const char *str, long long *val)
 		*val -= *str - '0';
 		str++;
 	}
-	if (convert_sign(sign, val))
+	if (convert_sign(sign, val, *str))
 		return (2);
 	if (*str == '\0')
 		return (0);
